@@ -1,0 +1,22 @@
+{
+  "name": "disqwerty",
+  "version": "1.0.0",
+  "description": "Qwerty for disables",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron-connect": "^0.6.1",
+    "gulp": "^3.9.1",
+    "gulp-vueify": "0.0.3"
+  },
+  "dependencies": {
+    "dialogs": "^1.1.19",
+    "electron": "^1.6.2",
+    "jschardet": "^1.4.2",
+    "vue-events": "^3.0.1"
+  }
+}
