@@ -3,8 +3,6 @@
         
         <form class="settings-menu border" v-show="settingsShow" transition="switch">
             <h1>Настройки</h1>
-            <button type="button" class="btn btn-default">Выбрать набор</button><br>
-      
 <div class="input-group">
   <span class="input-group-addon" >Таймаут переключения:</span>
   <input type="number" class="form-control" v-model="timeout">

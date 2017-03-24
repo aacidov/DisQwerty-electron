@@ -1,6 +1,6 @@
 <template>
         <table class="keyboard table" @click="click">
-            <tr is="rw" v-for="row in symbols" :row="row">
+            <tr is="rw" v-for="(row, index) in symbols" :row="row" :rindex="index">
             <tr is="rw"  :row="system">
             </tr>
         </table>
@@ -14,7 +14,7 @@
                 cx: 0,
                 cy: 0,
                 inRow: false,
-                symbols: ['йцукенгшщзхъё', 'фывапролджэ', ' ячсмитьбю', '1234567890'].map((el) => { return el.split(''); }),
+                symbols: [],
                 system:['<-','<=','##']
             }
         },
@@ -55,7 +55,7 @@
             },
             click: function () {
                 if (this.inRow) {
-                    this.$events.emit('input', this.$children[this.cy].$children[this.cx].content)
+                    this.$events.emit('input', this.$children[this.cy].$children[this.cx].out)
                     this.reset();
                     return;
                 }
@@ -75,6 +75,7 @@
         mounted() {
             this.$events.on('setLoaded', (set)=>{
                 this.symbols = set;
+                this.reset();
             })
 
             this.mark();

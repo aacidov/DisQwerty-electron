@@ -1,13 +1,13 @@
 <template>
     <tr class="row" :class="{success: marked}">
     <td is=btn content="^"></td>
-     <td is="btn"  v-for="symbol in row" :content="symbol"></td   >
+     <td is="btn"  v-for="(symbol, index) in row" :content="symbol" :index="index" :row="rindex"></td   >
        </tr>
 </template>
 
 <script>
     module.exports={
-        props: ['row'],
+        props: ['row', 'rindex'],
         data:
             function(){ return{
             marked:false
