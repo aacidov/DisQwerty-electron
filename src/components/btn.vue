@@ -1,6 +1,7 @@
 <template>
     <td class="button" :class="{success: marked}" @contextmenu.prevent="contextClick">
         <h3>{{title}}</h3>
+        <img v-if="src" :src="src" alt="" class="btn-image">
     </td>
 </template>
 <script>
@@ -12,11 +13,12 @@
         data: function () {
             return {
                 marked: false,
-                title: '', 
-                out: ''
+                title: '',
+                out: '',
+                src: null
             }
         },
-        props: ['row', 'content', 'index'],
+        props: ['row', 'content', 'index', "system", "rowOut"],
         methods: {
             mark() {
                 this.marked = true;
@@ -28,15 +30,21 @@
                 this.menu.popup(remote.getCurrentWindow())
             },
             makeTitle() {
+                this.src = "";
+
                 this.out = this.content;
-                if (this.out.indexOf(':=')>-1){
+                if (this.out.indexOf('%"') > -1) {
+                    this.src = this.out.match(/%\"(.*)"/)[1];
+                    this.out = this.out.replace(/%\".*\"/, "")
+                }
+                this.title = this.out;
+
+                if (this.out.indexOf(':=') > -1) {
                     var tmp = this.out.split(':=');
                     this.out = tmp[0];
                     this.title = tmp[1];
-                    return;
                 }
 
-                this.title = this.out;
 
             }
         },
@@ -46,31 +54,60 @@
             },
             content: function (val) {
                 this.makeTitle();
-                
+
             }
         },
 
         mounted() {
-           this. makeTitle();
+            this.makeTitle();
             const menu = this.menu = new Menu()
-            menu.append(new MenuItem({
-                label: 'Переименовать', click: () => {
-                    Dialogs.prompt("Введите новое название:", this.content, (title) => {
-                        if (title === undefined) return;
-                    //    this.content = title;
-                        this.$events.emit("rename", { title, coords: [this.row, this.index] })
-                    })
-                }
-            }))
-            menu.append(new MenuItem({
-                label: 'Удалить', click: () => {
+            if (this.rowOut) {
 
-                    Dialogs.confirm(`Удалить "${this.title}"`, res => {
-                        if (!res) return;
+                menu.append(new MenuItem({
+                    label: 'Добавить строку', click: () => {
 
-                    })
-                }
-            }))
+                        this.$events.emit("addRow", this.row);
+                    }
+                }));
+                menu.append(new MenuItem({
+                    label: 'Добавить кнопку', click: () => {
+                        Dialogs.prompt("Введите содержание:", (content) => {
+                            if (content === undefined) return;
+
+                            this.$events.emit("addBtn", { row: this.row, content });
+                        });
+
+                    }
+                }));
+                menu.append(new MenuItem({
+                    label: 'Удалить строку', click: () => {
+
+                        Dialogs.confirm(`Удалить строку`, res => {
+                            if (!res) return;
+                            this.$events.emit("removeRow", this.row);
+                        })
+                    }
+                }))
+            } else {
+                menu.append(new MenuItem({
+                    label: 'Переименовать', click: () => {
+                        Dialogs.prompt("Введите новое содержание:", this.content, (title) => {
+                            if (title === undefined) return;
+                            //    this.content = title;
+                            this.$events.emit("rename", { title, coords: [this.row, this.index] })
+                        })
+                    }
+                }))
+                menu.append(new MenuItem({
+                    label: 'Удалить', click: () => {
+
+                        Dialogs.confirm(`Удалить "${this.out}"`, res => {
+                            if (!res) return;
+                            this.$events.emit("remove", { coords: [this.row, this.index] })
+                        })
+                    }
+                }))
+            }
         }
     };
 
@@ -83,5 +120,9 @@
         width: auto;
         font-size: 4vh;
         height: 100%;
+    }
+    
+    .btn-image {
+        height: 10vh;
     }
 </style>

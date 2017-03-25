@@ -1,6 +1,6 @@
 <template>
     <tr class="row" :class="{success: marked}">
-    <td is=btn content="^"></td>
+    <td is=btn content="^" row-out="true" :row="rindex"></td>
      <td is="btn"  v-for="(symbol, index) in row" :content="symbol" :index="index" :row="rindex"></td   >
        </tr>
 </template>

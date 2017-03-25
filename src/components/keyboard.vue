@@ -1,7 +1,7 @@
 <template>
         <table class="keyboard table" @click="click">
             <tr is="rw" v-for="(row, index) in symbols" :row="row" :rindex="index">
-            <tr is="rw"  :row="system">
+            <tr is="rw" system  :row="system">
             </tr>
         </table>
 </template>
