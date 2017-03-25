@@ -23,6 +23,20 @@
                     this.loadSet();
                 });
             },
+            saveSetDialog() {
+                dialog.showSaveDialog({ defaultPath: this.filename }, (filename) => {
+                    if (filename == undefined) return;
+                    var string = this.set.map((a) => { return a.join(';') }).join('\n');
+                    fs.writeFile(filename, string, (err) => {
+                        if (err) return this.$events.emit('error', err);
+
+                    })
+                });
+            },
+            newSetDialog() {
+                this.filename = __dirname + Path.sep + ".." + Path.sep + "sets" + Path.sep + "new.dq";
+                this.loadSet();
+            },
             loadSet() {
 
                 fs.readFile(this.filename, (err, raw) => {
@@ -37,29 +51,29 @@
                 this.$events.emit('setLoaded', this.set);
 
             },
-            remove(data){
+            remove(data) {
                 this.set[data.coords[0]].splice(data.coords[1], 1);
-                if (this.set[data.coords[0]].length===0){
+                if (this.set[data.coords[0]].length === 0) {
                     return this.removeRow(data.coords[0]);
                 }
                 this.$events.emit('setLoaded', this.set);
 
             },
-            removeRow(rindex){
-                    this.set.splice(rindex, 1);
-                    this.$events.emit('setLoaded', this.set);
-                
+            removeRow(rindex) {
+                this.set.splice(rindex, 1);
+                this.$events.emit('setLoaded', this.set);
+
             },
-            addRow(after){
-                    this.set.splice(after+1, 0, []);
-                    
-                    this.$events.emit('setLoaded', this.set);
-                
-            }, 
-            addBtn(data){
+            addRow(after) {
+                this.set.splice(after + 1, 0, []);
+
+                this.$events.emit('setLoaded', this.set);
+
+            },
+            addBtn(data) {
                 this.set[data.row].push(data.content);
                 this.$events.emit('setLoaded', this.set);
-                
+
             }
 
         },
@@ -67,6 +81,8 @@
 
             this.loadSet();
             this.$events.on('chooseSetDialog', this.chooseSetDialog)
+            this.$events.on('saveSetDialog', this.saveSetDialog)
+            this.$events.on('newSetDialog', this.newSetDialog)
             this.$events.on('rename', this.rename)
             this.$events.on('remove', this.remove)
             this.$events.on('removeRow', this.removeRow)

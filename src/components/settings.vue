@@ -13,9 +13,9 @@
                 <button type="button" class="btn btn-default" @click="clear">Очистить</button>
             </div>
             <div>
-                <button type="button" class="btn btn-default" @click="chooseSet">Новый набор</button>
+                <button type="button" class="btn btn-default" @click="newSet">Новый набор</button>
                 <button type="button" class="btn btn-default" @click="chooseSet">Выбрать набор</button>
-                <button type="button" class="btn btn-default" @click="chooseSet">Сохранить набор</button>
+                <button type="button" class="btn btn-default" @click="saveSet">Сохранить набор</button>
             </div>
         </form>
         <div class="settings-show-button" @click="settingsShow = !settingsShow"></div>
@@ -36,6 +36,11 @@
         methods: {
             chooseSet: function () {
                 this.$events.emit('chooseSetDialog');
+            },
+            saveSet: function () {
+                this.$events.emit('saveSetDialog');
+            }, newSet: function () {
+                this.$events.emit('newSetDialog');
             },
             clear: function () {
                 this.$events.emit('clear');
