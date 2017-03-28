@@ -62,7 +62,6 @@
             this.makeTitle();
             const menu = this.menu = new Menu()
             if (this.rowOut) {
-
                 menu.append(new MenuItem({
                     label: 'Добавить строку', click: () => {
 
@@ -96,6 +95,12 @@
                             //    this.content = title;
                             this.$events.emit("rename", { title, coords: [this.row, this.index] })
                         })
+                    }
+                }))
+                menu.append(new MenuItem({
+                    label: 'Добавить картинку', click: () => {
+                            this.$events.emit("addImage", { coords: [this.row, this.index] })
+                        
                     }
                 }))
                 menu.append(new MenuItem({

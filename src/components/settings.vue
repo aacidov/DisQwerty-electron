@@ -12,10 +12,10 @@
                 <button type="button" class="btn btn-default" v-else @click="work=false">Стоп</button>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-default" @click="this.$events.emit('backspace')">Удалить последную букву</button>
-                <button type="button" class="btn btn-default" @click="this.$events.emit('backword')">Удалить последнее слово</button>
-                <button type="button" class="btn btn-default" @click="this.$events.emit('clear')">Очистить</button>
-                                
+                <button type="button" class="btn btn-default" @click="backdspaceListener">Удалить последную букву</button>
+                <button type="button" class="btn btn-default" @click="backwordListener">Удалить последнее слово</button>
+                <button type="button" class="btn btn-default" @click="clearListener">Очистить</button>
+
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-default" @click="newSet">Новый набор</button>
@@ -60,16 +60,28 @@
             }, newSet: function () {
                 this.$events.emit('newSetDialog');
             },
-            oneLineCheck: function () {            
+            oneLineCheck: function () {
                 this.$events.emit('reset');
-                
+
                 this.oneLine.on = !this.oneLine.on;
             },
-            showSystemsCheck: function () {            
+            showSystemsCheck: function () {
                 this.$events.emit('reset');
-                
+
                 this.showSystems.on = !this.showSystems.on;
+            },
+            clearListener: function () {
+                this.$events.emit('clear');
+            },
+            backdspaceListener: function () {
+                this.$events.emit('backspace')
+
+            },
+            backwordListener: function () {
+                this.$events.emit('backword')
+
             }
+
         }
     };
     module.exports.store = store;

@@ -59,6 +59,14 @@
                 this.$events.emit('setLoaded', this.set);
 
             },
+            addImage(data){
+                dialog.showOpenDialog({}, (filenames)=>{
+                    if (filenames==undefined) return;
+                    var image = filenames[0];
+                    this.set[data.coords[0]][data.coords[1]] += `%"${image}"`;
+
+                });
+            },
             removeRow(rindex) {
                 this.set.splice(rindex, 1);
                 this.$events.emit('setLoaded', this.set);
@@ -88,6 +96,7 @@
             this.$events.on('removeRow', this.removeRow)
             this.$events.on('addRow', this.addRow)
             this.$events.on('addBtn', this.addBtn)
+            this.$events.on('addImage', this.addImage)
         }
     }
 
