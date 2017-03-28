@@ -24,6 +24,9 @@
                     case "##":
                         this.clear();
                     break;
+                    case "@@":
+                        this.say();
+                    break;
                     default:
                         this.content+=content;
                         break;
@@ -37,6 +40,9 @@
             },
             backword: function(){
                 this.content = this.content.slice(0, this.content.lastIndexOf(" "));
+            },
+            say: function () {
+                this.$events.emit('say', this.content);
             }
         },
         mounted(){

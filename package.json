@@ -17,6 +17,8 @@
     "dialogs": "^1.1.19",
     "electron": "^1.6.2",
     "jschardet": "^1.4.2",
-    "vue-events": "^3.0.1"
+    "say": "^0.11.0",
+    "vue-events": "^3.0.1",
+    "wintts": "^0.1.1"
   }
 }

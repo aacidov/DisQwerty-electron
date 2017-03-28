@@ -3,30 +3,36 @@
 
         <form class="settings-menu border" v-show="showSettings" transition="switch">
             <h1>Настройки</h1>
+                <h4>Управление переключением:</h4> 
             <div class="input-group">
                 <span class="input-group-addon">Таймаут переключения:</span>
                 <input type="number" class="form-control" v-model="timeout">
             </div>
             <div class="form-group">
+                <h4>Управление запуском:</h4>
                 <button type="button" class="btn btn-default" v-if="!work" @click="work=true">Старт</button>
                 <button type="button" class="btn btn-default" v-else @click="work=false">Стоп</button>
             </div>
             <div class="form-group">
+                <h4>Управление полем вывода:</h4>
                 <button type="button" class="btn btn-default" @click="backdspaceListener">Удалить последную букву</button>
                 <button type="button" class="btn btn-default" @click="backwordListener">Удалить последнее слово</button>
                 <button type="button" class="btn btn-default" @click="clearListener">Очистить</button>
 
             </div>
             <div class="form-group">
+                <h4>Управление наборамим:</h4>
                 <button type="button" class="btn btn-default" @click="newSet">Новый набор</button>
                 <button type="button" class="btn btn-default" @click="chooseSet">Выбрать набор</button>
                 <button type="button" class="btn btn-default" @click="saveSet">Сохранить набор</button>
             </div>
 
             <div class="form-group">
+                <h4>Управление представлением</h4>
                 <button type="button" class="btn btn-default" :class="{'btn-success':oneLine.on}" @click="oneLineCheck()">Режим одной строки</button>
                 <button type="button" class="btn btn-default" v-if="!oneLine.on" :class="{'btn-success':showSystems.on}" @click="showSystemsCheck()">Показывать системные кнопки</button>
             </div>
+            <tts></tts>
         </form>
         <div class="settings-show-button" @click="showSettings = !showSettings"></div>
 
@@ -44,12 +50,18 @@
         },
         showSystems: {
             on: true
+        }, 
+        tts:{
+            online:true            
         }
 
     };
     module.exports = {
         data: function () {
             return store;
+        },
+        components:{
+            tts: require('./tts')
         },
         methods: {
             chooseSet: function () {
@@ -96,8 +108,8 @@
     }
     
     .settings-menu {
-        width: 500px;
-        height: 300px;
+        width: 50%;
+        height: 100vh;
         border: 1px solid black;
         border-radius: 1px;
         background: white;

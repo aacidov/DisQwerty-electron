@@ -22,7 +22,7 @@
                 },
                 _inRow: false,
                 symbols: [],
-                system:['<-','<=','##'],
+                system:['<-','<=','##', '@@'],
                 settings: settings.store
             }
         },
