@@ -1,7 +1,8 @@
 <template>
         <table class="keyboard table" @click="click">
-            <tr is="rw" v-for="(row, index) in symbols" :row="row" :rindex="index">
-            <tr is="rw" system  :row="system">
+            <tr is="rw" v-if="settings.oneLine.on" :row="symbols[0]" :rindex="0">
+            <tr is="rw" v-else v-for="(row, index) in symbols" :row="row" :rindex="index">
+            <tr v-if="settings.showSystems.on&&!settings.oneLine.on" is="rw"   :row="system">
             </tr>
         </table>
 </template>
@@ -13,9 +14,16 @@
             return {
                 cx: 0,
                 cy: 0,
-                inRow: false,
+                get inRow(){
+                    return this.settings.oneLine.on||this._inRow;
+                },
+                set inRow (v){
+                    this._inRow = v;
+                },
+                _inRow: false,
                 symbols: [],
-                system:['<-','<=','##']
+                system:['<-','<=','##'],
+                settings: settings.store
             }
         },
         components: {
@@ -27,7 +35,7 @@
                     this.$children[this.cy].$children[this.cx].mark();
                     return;
                 }
-                this.$children[this.cy].mark();
+                if (this.$children[this.cy] !== undefined) this.$children[this.cy].mark();
             },
             dismark: function () {
                 if (this.inRow) {
@@ -39,6 +47,7 @@
             },
             tick: function () {
                 this.dismark();
+
                 if (this.inRow) {
                     this.cx++;
                     if (this.cx === this.$children[this.cy].$children.length) {
@@ -68,7 +77,7 @@
                 this.dismark();
                 this.inRow = false;
                 this.cx = 0;
-                this.cy = -1;
+                this.cy = 0;
 
             }
         },
@@ -77,6 +86,7 @@
                 this.symbols = set;
                 this.reset();
             })
+            this.$events.on('reset', this.reset);
 
             this.mark();
             window.onkeyup = (e) => {

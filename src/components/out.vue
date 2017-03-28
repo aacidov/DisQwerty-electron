@@ -42,6 +42,8 @@
         mounted(){
             this.$events.on('input', this.input);
             this.$events.on('clear', this.clear);
+            this.$events.on('backspace', this.backspace);
+            this.$events.on('backword', this.backword);
         }
     };
 </script>

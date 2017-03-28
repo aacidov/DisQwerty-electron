@@ -1,33 +1,51 @@
 <template>
     <div class="settings">
 
-        <form class="settings-menu border" v-show="settingsShow" transition="switch">
+        <form class="settings-menu border" v-show="showSettings" transition="switch">
             <h1>Настройки</h1>
             <div class="input-group">
                 <span class="input-group-addon">Таймаут переключения:</span>
                 <input type="number" class="form-control" v-model="timeout">
             </div>
-            <div>
+            <div class="form-group">
                 <button type="button" class="btn btn-default" v-if="!work" @click="work=true">Старт</button>
                 <button type="button" class="btn btn-default" v-else @click="work=false">Стоп</button>
-                <button type="button" class="btn btn-default" @click="clear">Очистить</button>
             </div>
-            <div>
+            <div class="form-group">
+                <button type="button" class="btn btn-default" @click="this.$events.emit('backspace')">Удалить последную букву</button>
+                <button type="button" class="btn btn-default" @click="this.$events.emit('backword')">Удалить последнее слово</button>
+                <button type="button" class="btn btn-default" @click="this.$events.emit('clear')">Очистить</button>
+                                
+            </div>
+            <div class="form-group">
                 <button type="button" class="btn btn-default" @click="newSet">Новый набор</button>
                 <button type="button" class="btn btn-default" @click="chooseSet">Выбрать набор</button>
                 <button type="button" class="btn btn-default" @click="saveSet">Сохранить набор</button>
             </div>
+
+            <div class="form-group">
+                <button type="button" class="btn btn-default" :class="{'btn-success':oneLine.on}" @click="oneLineCheck()">Режим одной строки</button>
+                <button type="button" class="btn btn-default" v-if="!oneLine.on" :class="{'btn-success':showSystems.on}" @click="showSystemsCheck()">Показывать системные кнопки</button>
+            </div>
         </form>
-        <div class="settings-show-button" @click="settingsShow = !settingsShow"></div>
+        <div class="settings-show-button" @click="showSettings = !showSettings"></div>
 
     </div>
 </template>
 
 <script>
     var store = {
-        settingsShow: true,
+        showSettings: true,
         timeout: 1,
-        work: true
+        work: true,
+
+        oneLine: {
+            on: false
+        },
+        showSystems: {
+            on: true
+        }
+
     };
     module.exports = {
         data: function () {
@@ -42,8 +60,15 @@
             }, newSet: function () {
                 this.$events.emit('newSetDialog');
             },
-            clear: function () {
-                this.$events.emit('clear');
+            oneLineCheck: function () {            
+                this.$events.emit('reset');
+                
+                this.oneLine.on = !this.oneLine.on;
+            },
+            showSystemsCheck: function () {            
+                this.$events.emit('reset');
+                
+                this.showSystems.on = !this.showSystems.on;
             }
         }
     };
