@@ -1,4 +1,4 @@
 node_modules
 output
-dist/*
+dist/components/*
 .DS_Store

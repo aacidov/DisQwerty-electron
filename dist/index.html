@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DisQwerty</title>
+    <link rel="stylesheet" href="assets/bootstrap.min.css">
+    <script src="assets/webspeechkit.js"></script>
+    <script src="assets/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <out></out> 
+        <keyboard></keyboard>
+        <settings></settings>
+        <sc></sc>
+        <error></error>
+     </div>
+     
+    <script>
+
+    require('vue-events')
+        new Vue({
+            el:"#app",
+            components:{
+                out:require('./components/out'),
+                keyboard:require('./components/keyboard'),
+                error:require('./components/error'),
+                settings:require('./components/settings'),
+                sc: require('./components/setController')
+
+            }
+        })
+    </script>
+</body>
+</html>
