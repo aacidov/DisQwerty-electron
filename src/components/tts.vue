@@ -3,7 +3,7 @@
         <h4>Настройки синтезатора голоса.</h4>
         <button type="button" class="btn btn-default" @click="say('Проверяем голос')">Проверка</button>
         <button type="button" class="btn btn-default" :class="{'btn-success':online}" @click="online=!online">Онлайн озвучка текста</button>
-        <select class="btn" v-model="voice">
+        <select class="btn" v-model="voice" v-if="online">
     <option value="zahar">Захар</option>
     <option value="ermil">Емиль</option>
     <option value="jane">Джейн</option>
