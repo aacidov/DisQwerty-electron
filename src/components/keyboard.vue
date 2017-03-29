@@ -87,6 +87,7 @@
                 this.reset();
             })
             this.$events.on('reset', this.reset);
+            this.$events.on('click', this.click);
 
             this.mark();
             window.onkeyup = (e) => {

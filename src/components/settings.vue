@@ -33,6 +33,7 @@
                 <button type="button" class="btn btn-default" v-if="!oneLine.on" :class="{'btn-success':showSystems.on}" @click="showSystemsCheck()">Показывать системные кнопки</button>
             </div>
             <tts></tts>
+            <disbutton></disbutton>
         </form>
         <div class="settings-show-button" @click="showSettings = !showSettings"></div>
 
@@ -61,7 +62,8 @@
             return store;
         },
         components:{
-            tts: require('./tts')
+            tts: require('./tts'),
+            disbutton: require('./disbutton')
         },
         methods: {
             chooseSet: function () {
