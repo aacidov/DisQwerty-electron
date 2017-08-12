@@ -11,7 +11,12 @@
             <div class="form-group">
                 <h4>Управление запуском:</h4>
                 <button type="button" class="btn btn-default" v-if="!work" @click="work=true">Старт</button>
-                <button type="button" class="btn btn-default" v-else @click="work=false">Стоп</button>
+                <button type="button" class="btn btn-default btn-success" v-else @click="work=false">Стоп</button>
+            </div>
+            <div class="form-group">
+                <h4>Управление предиктом (т9):</h4>
+                <button type="button" class="btn btn-default" v-if="!predict.on" @click="predict.on=true">Выключенно</button>
+                <button type="button" class="btn btn-default btn-success" v-else @click="predict.on=false">Включенно</button>
             </div>
             <div class="form-group">
                 <h4>Управление полем вывода:</h4>
@@ -34,6 +39,7 @@
             </div>
             <tts></tts>
             <disbutton></disbutton>
+            <vk></vk>
         </form>
         <div class="settings-show-button" @click="showSettings = !showSettings"></div>
 
@@ -41,6 +47,7 @@
 </template>
 
 <script>
+var vk = require('./vk');
     var store = {
         showSettings: true,
         timeout: 1,
@@ -54,8 +61,11 @@
         }, 
         tts:{
             online:true            
-        }
-
+        },
+        predict:{
+            on:true
+        },
+        vk:vk.store
     };
     module.exports = {
         data: function () {
@@ -63,6 +73,7 @@
         },
         components:{
             tts: require('./tts'),
+            vk: vk,
             disbutton: require('./disbutton')
         },
         methods: {

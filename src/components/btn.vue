@@ -122,7 +122,7 @@
     .button {
         border: 1px black solid;
         text-align: center;
-        width: auto;
+    
         font-size: 4vh;
         height: 100%;
     }

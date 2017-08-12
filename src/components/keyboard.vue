@@ -1,10 +1,19 @@
 <template>
+<div>
         <table class="keyboard table" @click="click">
-            <tr is="rw" v-if="settings.oneLine.on" :row="symbols[0]" :rindex="0">
-            <tr is="rw" v-else v-for="(row, index) in symbols" :row="row" :rindex="index">
-            <tr v-if="settings.showSystems.on&&!settings.oneLine.on" is="rw"   :row="system">
+            <tr v-if="settings.showSystems.on&&!settings.oneLine.on" is="rw"   :row="system" :system='true'>
+                </table>
+        <table class="keyboard table" @click="click">
+                
+            <tr is="rw" v-if="settings.predict.on" :predict='true' :row='[]' ></tr>
+        </table>
+        <table class="keyboard table" @click="click">             
+            <tr is="rw" v-if="settings.oneLine.on" :row="symbols[0]" >
+
+            <tr is="rw" v-else v-for="(row, index) in symbols" :row.sync="row" :rindex.sync="index">
             </tr>
         </table>
+        
 </template>
 
 <script>
@@ -21,13 +30,21 @@
                     this._inRow = v;
                 },
                 _inRow: false,
-                symbols: [],
-                system:['<-','<=','##', '@@'],
+                symbols: [[]],
                 settings: settings.store
             }
         },
+        computed: {
+            system(){
+                if (settings.store.vk.token!=null) return ['<-','<=','##', '@@', 'vkpublish:=vk'];
+                else ['<-','<=','##', '@@'];
+
+            }
+        },
         components: {
-            rw: require('./row')        },
+            rw: require('./row'),
+            predict: require('./predict')       
+         },
         methods: {
             mark: function () {
                 if (this.inRow) {
@@ -109,7 +126,6 @@
 <style>
     .keyboard {
         width: 100%;
-        height: 100%;
     }
     
     .marked {
